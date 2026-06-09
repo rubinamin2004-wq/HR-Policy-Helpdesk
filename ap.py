@@ -256,26 +256,27 @@ html, body, .stApp {
 # TOPBAR
 # =========================================================
 
-# Encode logo as base64 to embed inline
 import base64
 from pathlib import Path
+import streamlit as st
 
 logo_path = Path("LOGO_BLACK.png")
 logo_b64 = base64.b64encode(logo_path.read_bytes()).decode()
 
-
-st.markdown("""
-<div class="topbar">
+# Added the 'f' prefix right before the triple quotes
+st.markdown(f"""
+<div class="topbar" style="display: flex; align-items: center;">
     <div class="topbar-text">
-        <span class="topbar-title">HR Policy Helpdesk</span>
+        <span class="topbar-title" style="display: block;">HR Policy Helpdesk</span>
         <span class="topbar-sub">Ask any question related to company HR policies</span>
     </div>
-    <div style="margin-left:auto;">
+    <div style="margin-left: auto;">
         <img src="data:image/png;base64,{logo_b64}"
              style="height:65px; width:auto; display:block;" />
     </div>
 </div>
 """, unsafe_allow_html=True)
+
 
 st.markdown('<span class="sec">00 — API Configuration</span>', unsafe_allow_html=True)
 GEMINI_API_KEY = st.text_input(
