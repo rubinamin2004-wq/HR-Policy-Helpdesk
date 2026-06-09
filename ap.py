@@ -255,6 +255,23 @@ html, body, .stApp {
 # =========================================================
 # TOPBAR
 # =========================================================
+
+# Encode logo as base64 to embed inline
+import base64
+from pathlib import Path
+
+logo_path = Path("LOGO_BLACK.png")
+logo_b64 = base64.b64encode(logo_path.read_bytes()).decode()
+
+st.markdown(f"""
+<div class="topbar">
+    <div style="margin-left:auto;">
+        <img src="data:image/png;base64,{logo_b64}"
+             style="height:65px; width:auto; display:block;" />
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown("""
 <div class="topbar">
     <div class="topbar-text">
