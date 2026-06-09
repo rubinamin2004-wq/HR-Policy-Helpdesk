@@ -203,6 +203,39 @@ html, body, .stApp {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
+/* ----- API status ----- */
+.api-status-ok {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0.5rem;
+    font-size: 11px;
+    color: #2D7A3A;
+}
+.api-status-empty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0.5rem;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* ----- API key input ----- */
+.stTextInput input {
+    background: var(--off-white) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    color: var(--text) !important;
+    font-size: 13px !important;
+}
+.stTextInput input:focus {
+    border-color: var(--orange) !important;
+    box-shadow: 0 0 0 3px rgba(232,93,4,0.1) !important;
+    outline: none !important;
+}
+
+
 /* ----- Empty state ----- */
 .empty-state {
     border: 1px dashed var(--border);
@@ -222,7 +255,6 @@ html, body, .stApp {
 # =========================================================
 # TOPBAR
 # =========================================================
-
 st.markdown("""
 <div class="topbar">
     <div class="topbar-text">
@@ -232,17 +264,38 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+st.markdown('<span class="sec">00 — API Configuration</span>', unsafe_allow_html=True)
+GEMINI_API_KEY = st.text_input(
+    "Gemini API Key",
+    type="password",
+    placeholder="Enter your Gemini API key",
+    label_visibility="collapsed"
+)
+if GEMINI_API_KEY:
+    st.markdown("""
+    <div class="api-status-ok">
+        <span>●</span> <span>Key entered — ready to search</span>
+    </div>
+    """, unsafe_allow_html=True)
+    genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel("gemini-2.5-flash")
+else:
+    st.markdown("""
+    <div class="api-status-empty">
+        <span>○</span> <span>Enter your Gemini API key above &nbsp;·&nbsp;
+        <a href="https://aistudio.google.com/app/apikey" target="_blank"
+           style="color:#E85D04; text-decoration:none;">Get one free ↗</a></span>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown('<div class="rule"></div>', unsafe_allow_html=True)
+
 # =========================================================
 # CONFIG
 # =========================================================
 
-GEMINI_API_KEY = "----"
-DOCX_FILE      = "hr_policy.docx"
-VECTOR_DB      = "vector_store"
-
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-2.5-flash")
-
+DOCX_FILE = "hr_policy.docx"
+VECTOR_DB = "vector_store"
 # =========================================================
 # EXTRACT WORD SECTIONS
 # =========================================================
@@ -352,6 +405,9 @@ QUESTION:
 # =========================================================
 
 db = build_or_load_db()
+
+if not GEMINI_API_KEY:
+    st.stop()
 
 st.markdown('<span class="sec">Ask a Question</span>', unsafe_allow_html=True)
 
