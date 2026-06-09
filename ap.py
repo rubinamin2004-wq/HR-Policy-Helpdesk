@@ -278,6 +278,10 @@ st.markdown("""
         <span class="topbar-title">HR Policy Helpdesk</span>
         <span class="topbar-sub">Ask any question related to company HR policies</span>
     </div>
+    <div style="margin-left:auto;">
+        <img src="data:image/png;base64,{logo_b64}"
+             style="height:65px; width:auto; display:block;" />
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
