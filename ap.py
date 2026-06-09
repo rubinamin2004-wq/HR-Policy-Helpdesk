@@ -236,7 +236,7 @@ st.markdown("""
 # CONFIG
 # =========================================================
 
-GEMINI_API_KEY = "AQ.Ab8RN6LLmHwiC-kJdF_97fCY9ZxZ5VVa6mYzoVf4aJIiqqpwsw"
+GEMINI_API_KEY = "----"
 DOCX_FILE      = "hr_policy.docx"
 VECTOR_DB      = "vector_store"
 
