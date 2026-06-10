@@ -292,7 +292,7 @@ if GEMINI_API_KEY:
     </div>
     """, unsafe_allow_html=True)
     genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-2.5-flash")
+    model = genai.GenerativeModel("gemini-3.1-flash-lite")
 else:
     st.markdown("""
     <div class="api-status-empty">
